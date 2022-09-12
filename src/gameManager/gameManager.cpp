@@ -1,5 +1,6 @@
 #include "gameManager.h"
 
+
 void gameManager::update() {
 	//Check for events
 	sf::Event event;
@@ -8,6 +9,9 @@ void gameManager::update() {
 			gameWindow.close();
 		}
 	}
+
+	//Update component sytems
+	
 }
 
 void gameManager::display() {

@@ -1,12 +1,22 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+
+#include "EntityHandler.h"
+#include "ResourceHandler.h"
+
 typedef unsigned int uint;
 
 class gameManager {
 private:
-	/* Graphics  - - - - - - - - - - - - - - - - - - - - - - - - - */
+	/* Graphics - - - - - - - - - - - - - - - - - - - - - - - - - - */
 	sf::RenderWindow gameWindow;
+
+	/* Entities - - - - - - - - - - - - - - - - - - - - - - - - - - */
+	//Maintains all tileEntities, itemEntities, etc
+	EntityHandler EntityHandler_;
+	//Maintains all sounds and textures
+	ResourceHandler ResourceHandler_;
 	
 	/* Game Loop - - - - - - - - - - - - - - - - - - - - - - - - - */
 	//Handles events and updates gamestate
