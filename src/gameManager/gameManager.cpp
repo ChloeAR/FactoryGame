@@ -11,6 +11,7 @@ void gameManager::update() {
 	}
 
 	//Update component sytems
+	EntityHandler_.update();
 	
 }
 
@@ -19,6 +20,7 @@ void gameManager::display() {
 	gameWindow.clear(sf::Color(75, 75, 76));
 
 	//Update display
+	EntityHandler_.draw(&gameWindow);
 
 	//Push display
 	gameWindow.display();
@@ -33,6 +35,7 @@ gameManager::gameManager(uint gameWidth, uint gameHeight) : gameWindow(sf::Video
 }
 
 void gameManager::run() {
+
 	while (gameWindow.isOpen()) {
 		update();
 
