@@ -2,25 +2,7 @@
 #include <vector>
 #include "ResourceHandler.h"
 
-
-class Entity {
-public:
-	sf::Sprite sprite;
-
-	virtual void update() {
-	
-	}
-
-	Entity(sf::Texture& texture) : sprite(texture) {}
-};
-
-class TileEntity : public Entity {
-
-};
-
-class ItemEntity : public Entity {
-
-};
+#include "../entities/entityList.h"
 
 
 class EntityHandler {
@@ -33,4 +15,24 @@ public:
 	void update();
 	//Draws all entities to screen
 	void draw(sf::RenderWindow* window);
+	//Clears the memory of all entity lists
+	void freeEntities();
+	
+	//Create a new tile entity and place it on the list
+	template<class TileType>
+	TileEntity& newTile(ResourceHandler& resources, sf::Vector2f pos) {
+		TileType* tile = new TileType(resources, pos);
+		tileEntities.push_back(tile);
+
+		return *tile;
+	}
+
+	//Create a new item entity and place it on the list
+	template<class ItemType>
+	ItemEntity& newItem(ResourceHandler& resources, sf::Vector2f pos) {
+		ItemType* item = new ItemType(resources, pos);
+		itemEntities.push_back(item);
+
+		return *item;
+	}
 };
