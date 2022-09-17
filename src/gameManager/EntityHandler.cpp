@@ -1,14 +1,14 @@
 #include "EntityHandler.h"
 
-void EntityHandler::update() {
+void EntityHandler::update(sf::Time timeElapsed) {
 	//Loop through tileEntities
 	for (unsigned int i = 0; i < tileEntities.size(); i++){
-		tileEntities.at(i)->update();
+		tileEntities.at(i)->update(timeElapsed);
 	}
 
 	//Loop through itemEntities
 	for (unsigned int i = 0; i < itemEntities.size(); i++) {
-		itemEntities.at(i)->update();
+		itemEntities.at(i)->update(timeElapsed);
 	}
 }
 

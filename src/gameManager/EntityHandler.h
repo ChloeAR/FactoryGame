@@ -12,7 +12,7 @@ private:
 
 public:
 	//Updates all tileEntities and itemEntities
-	void update();
+	void update(sf::Time timeElapsed);
 	//Draws all entities to screen
 	void draw(sf::RenderWindow* window);
 	//Clears the memory of all entity lists

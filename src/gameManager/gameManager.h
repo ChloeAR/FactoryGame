@@ -17,8 +17,12 @@ private:
 	EntityHandler EntityHandler_;
 	//Maintains all sounds and textures
 	ResourceHandler ResourceHandler_;
+
+	sf::Sprite MouseSprite;
 	
 	/* Game Loop - - - - - - - - - - - - - - - - - - - - - - - - - */
+	sf::Clock Clock_;
+
 	//Handles events and updates gamestate
 	void update();
 	//Updates display
