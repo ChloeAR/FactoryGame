@@ -9,24 +9,14 @@ private:
 	uint columns, rows;
 	//Length and Width of each sprite.
 	uint pixelWidth, pixelHeight;
+	//Timekeeping for animation, how many milliseconds before the next frame
+	sf::Clock clock; uint milliseconds;
 
 public:
-	AnimationComponent(uint columns, uint rows, uint pixelWidth, uint pixelHeight) {
-		this->columns = columns; this->rows = rows; this->pixelWidth = pixelWidth; this->pixelHeight = pixelHeight;
-	}
+	//Creates an animator with specified columns, rows, where each rectangle has specified pixel dimensions.
+	//A new frame will be drawn when it has been milliseconds since the last one.
+	AnimationComponent(uint columns, uint rows, uint pixelWidth, uint pixelHeight, uint milliseconds);
 
-	void runSheet(sf::Sprite& sprite) {
-		sf::IntRect rect = sprite.getTextureRect();
-		if (rect.left < ((columns - 1) * pixelWidth)) {
-			rect.left = rect.left + pixelWidth;
-		}
-		else {
-			rect.left = 0;
-			if (rect.top < ((rows - 1) * pixelHeight)) {
-				rect.top = rect.top + pixelHeight;
-			}
-			else { rect.top = 0; }
-		}
-		sprite.setTextureRect(rect);
-	}
+	//Triggers the next frame as long as it has been at least [milliseconds]
+	void runSheet(sf::Sprite& sprite);
 };

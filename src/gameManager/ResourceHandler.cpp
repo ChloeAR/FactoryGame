@@ -1,6 +1,6 @@
 #include "ResourceHandler.h"
 
-//Hardcoded for now
+//Hardcoded for now -> eventually store in a file
 void ResourceHandler::initTextures() {
 	auto tmpPtr = std::make_unique<sf::Texture>();
 	tmpPtr->loadFromFile("data/textures/cursor_place.png");

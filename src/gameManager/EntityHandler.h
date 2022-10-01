@@ -1,9 +1,9 @@
 #pragma once
+
 #include <vector>
+
 #include "ResourceHandler.h"
-
 #include "../entities/entityList.h"
-
 
 class EntityHandler {
 private:
@@ -18,7 +18,7 @@ public:
 	//Clears the memory of all entity lists
 	void freeEntities();
 	
-	//Create a new tile entity and place it on the list
+	//Creates a TileEntity at the given position.
 	template<class TileType>
 	TileEntity& newTile(ResourceHandler& resources, sf::Vector2f pos) {
 		TileType* tile = new TileType(resources, pos);
@@ -27,7 +27,18 @@ public:
 		return *tile;
 	}
 
-	//Create a new item entity and place it on the list
+	//Creates a TileEntity at the Transformables position with the same rotation.
+	template<class TileType>
+	TileEntity& newTile(ResourceHandler& resources, sf::Transformable trans) {
+		TileType* tile = new TileType(resources, trans.getPosition());
+		tile->sprite.setOrigin(trans.getOrigin());
+		tile->sprite.setRotation(trans.getRotation());
+		tileEntities.push_back(tile);
+
+		return *tile;
+	}
+
+	//Creates an ItemEntity at the given position.
 	template<class ItemType>
 	ItemEntity& newItem(ResourceHandler& resources, sf::Vector2f pos) {
 		ItemType* item = new ItemType(resources, pos);

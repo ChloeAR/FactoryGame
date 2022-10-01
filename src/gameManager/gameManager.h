@@ -12,13 +12,13 @@ private:
 	/* Graphics - - - - - - - - - - - - - - - - - - - - - - - - - - */
 	sf::RenderWindow gameWindow;
 
+
 	/* Entities - - - - - - - - - - - - - - - - - - - - - - - - - - */
 	//Maintains all tileEntities, itemEntities, etc
 	EntityHandler EntityHandler_;
 	//Maintains all sounds and textures
 	ResourceHandler ResourceHandler_;
 
-	sf::Sprite MouseSprite;
 	
 	/* Game Loop - - - - - - - - - - - - - - - - - - - - - - - - - */
 	sf::Clock Clock_;
