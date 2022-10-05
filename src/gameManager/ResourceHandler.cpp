@@ -12,7 +12,9 @@ void ResourceHandler::initTextures() {
 }
 
 void ResourceHandler::initSounds() {
-	
+	auto tmpPtr = std::make_unique<sf::SoundBuffer>();
+	tmpPtr->loadFromFile("data/audio/click1.wav");
+	SoundMap.push_back(std::move(tmpPtr));
 }
 
 ResourceHandler::ResourceHandler() {

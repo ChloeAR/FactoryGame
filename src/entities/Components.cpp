@@ -1,27 +1,52 @@
 #include "Components.h"
 
-AnimationComponent::AnimationComponent(uint columns, uint rows, uint pixelWidth, uint pixelHeight, uint milliseconds) {
+AnimationComponent::AnimationComponent(uint columns, uint rows, uint pixelWidth, uint pixelHeight) {
 	this->columns = columns; this->rows = rows; this->pixelWidth = pixelWidth;
-	this->pixelHeight = pixelHeight; this->milliseconds = milliseconds;
+	this->pixelHeight = pixelHeight;
+
+	firstFrame = 1;
+	lastFrame = columns * rows;
+	milliseconds = 500;
 }
 
 void AnimationComponent::runSheet(sf::Sprite& sprite) {
+	
 	//Check that enough time has elapsed since previous update
 	if (clock.getElapsedTime().asMilliseconds() > milliseconds) {
 		clock.restart();
 
-		//Shift the sprites textureRect to the next one
+		//Advance frame
 		sf::IntRect rect = sprite.getTextureRect();
-		if (rect.left < ((columns - 1) * pixelWidth)) {
-			rect.left = rect.left + pixelWidth;
+		if (currentFrame < lastFrame) {
+			currentFrame++;
 		}
 		else {
-			rect.left = 0;
-			if (rect.top < ((rows - 1) * pixelHeight)) {
-				rect.top = rect.top + pixelHeight;
-			}
-			else { rect.top = 0; }
+			currentFrame = firstFrame;
 		}
+
+		//Shift the texture rectangle to be in the spot of the new frame
+		int pixelsRight = (currentFrame - 1) * pixelWidth;
+		int pixelsDown = 0;
+		while (pixelsRight >= columns * pixelWidth) {
+			pixelsRight = pixelsRight - (columns * pixelWidth);
+			pixelsDown = pixelsDown + pixelHeight;
+		}
+		rect.left = pixelsRight;
+		rect.top = pixelsDown;
+
 		sprite.setTextureRect(rect);
 	}
+}
+
+void AnimationComponent::setFrames(uint first, uint last) {
+	//Handle if either is 0 (Pushes limit to the begininng or end)
+	if (last == 0) { this->lastFrame = columns * rows; }
+	else { this->lastFrame = last; }
+	if (first == 0) { this->firstFrame = 1; }
+	else { this->firstFrame = first; }
+
+	currentFrame = firstFrame;
+
+	//If the lastFrame is before the first one the animator will stay on the firstFrame.
+	if (lastFrame < firstFrame) { lastFrame = firstFrame; }
 }
