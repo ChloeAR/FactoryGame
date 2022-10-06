@@ -10,6 +10,8 @@ HEADERS := $(shell find $(SRC_DIR) -name '*.h')
 
 OBJ_FILES := $(patsubst $(SRC_DIR)/%.cpp,$(BUILD_DIR)/%.o,$(SRC_FILES))
 
+OBJ_DIRS := $(dir $(OBJ_FILES))
+
 factory: $(OBJ_FILES)
 	g++ -o $@ $(OBJ_FILES) $(LIB_DIR) $(LIBS)
 	echo 'export LD_LIBRARY_PATH=./shared && ./factory' > LaunchGame.out
@@ -17,10 +19,11 @@ factory: $(OBJ_FILES)
 
 
 $(BUILD_DIR)/%.o : $(SRC_DIR)/%.cpp $(HEADERS)
+	mkdir -p $(OBJ_DIRS)
 	g++ $(INC_DIR) -c $< -o $@ 
 
 .PHONY: clean
 clean: 
-	find $(BUILD_DIR) -name '*.o' -delete
+	rm -r build/
 	rm factory
 	rm LaunchGame.out
