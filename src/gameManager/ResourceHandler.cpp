@@ -3,11 +3,15 @@
 //Hardcoded for now -> eventually store in a file
 void ResourceHandler::initTextures() {
 	auto tmpPtr = std::make_unique<sf::Texture>();
-	tmpPtr->loadFromFile("data/textures/cursor_place.png");
+	tmpPtr->loadFromFile("data/textures/cursor_place.png");				//0
 	TextureMap.push_back(std::move(tmpPtr));
 
 	tmpPtr = std::make_unique<sf::Texture>();
-	tmpPtr->loadFromFile("data/textures/conveyor_one_spritesheet.png");
+	tmpPtr->loadFromFile("data/textures/conveyor_one_spritesheet.png");	//1
+	TextureMap.push_back(std::move(tmpPtr));
+
+	tmpPtr = std::make_unique<sf::Texture>();
+	tmpPtr->loadFromFile("data/textures/items/ores.png");				//2
 	TextureMap.push_back(std::move(tmpPtr));
 }
 

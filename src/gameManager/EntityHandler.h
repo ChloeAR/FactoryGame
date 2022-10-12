@@ -5,10 +5,14 @@
 #include "ResourceHandler.h"
 #include "../entities/entityList.h"
 
+#include <typeinfo>
+
 class EntityHandler {
 private:
 	std::vector<TileEntity*> tileEntities;
 	std::vector<ItemEntity*> itemEntities;
+	
+	std::vector<Conveyor*> conveyorEntities;
 
 public:
 	//Updates all tileEntities and itemEntities
@@ -22,7 +26,11 @@ public:
 	template<class TileType, typename ...ARGS>
 	TileType& newTile(ARGS && ...args) {
 		TileType* tile = new TileType(std::forward<ARGS>(args)...);
-		tileEntities.push_back(tile);
+		//Push conveyors into separate vector
+		if (typeid(TileType) == typeid(Conveyor)) {
+			conveyorEntities.push_back(tile);
+		}
+		else { tileEntities.push_back(tile); }
 
 		return *tile;
 	}

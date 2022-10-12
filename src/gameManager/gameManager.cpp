@@ -1,5 +1,34 @@
 #include "gameManager.h"
 
+void gameManager::demo() {
+	for (int i = 0; i < 8; i++) {
+		EntityHandler_.newTile<Conveyor>(ResourceHandler_, sf::Vector2f(64, 64 * i + 64), 3);
+		Conveyor& conv = EntityHandler_.newTile<Conveyor>(ResourceHandler_, sf::Vector2f(64 * i + 128 + 32, 64 * 8 - 32), 1);
+		conv.sprite.setOrigin(8, 8);
+		conv.sprite.setRotation(270);
+
+		Conveyor& conv2 = EntityHandler_.newTile<Conveyor>(ResourceHandler_, sf::Vector2f(64 * i + 128, 0), 3);
+		conv2.sprite.setRotation(90);
+
+		Conveyor& conv3 = EntityHandler_.newTile<Conveyor>(ResourceHandler_, sf::Vector2f(512 + 128, i * 64), 3);
+		conv3.sprite.setRotation(180);
+	}
+	
+	Metal& met = EntityHandler_.newItem<Metal>(ResourceHandler_, sf::Vector2f(64 + 16, 64 * 9 + 16), Metal::Type::Copper);
+	met.smelt();
+	for (int i = 0; i < 4; i++) {
+		EntityHandler_.newTile<Conveyor>(ResourceHandler_, sf::Vector2f(128 * i + 128, 64 * 8 ), 2);
+		EntityHandler_.newTile<Conveyor>(ResourceHandler_, sf::Vector2f(128 * i + 128, 64 * 9), 2);
+		EntityHandler_.newItem<Metal>(ResourceHandler_, sf::Vector2f(128 * i + 128 + 16, 64 * 9 + 16), Metal::Type::Iron);
+		EntityHandler_.newItem<Metal>(ResourceHandler_, sf::Vector2f(128 * i + 128 + 16, 64 * 8 + 16), Metal::Type::Copper);
+
+		Conveyor& conv = EntityHandler_.newTile<Conveyor>(ResourceHandler_, sf::Vector2f(128 * i + 128, 0), 3);
+		conv.sprite.setRotation(90);
+	}
+
+
+}
+
 void gameManager::update() {
 	//Check for events
 	sf::Event event;
@@ -18,6 +47,8 @@ void gameManager::update() {
 }
 
 void gameManager::display() {
+	sf::Time timeElapsed = DisplayClock_.getElapsedTime();
+	if (timeElapsed.asMilliseconds() < 16) { return; }
 	//Backsplash
 	gameWindow.clear(sf::Color(75, 75, 76));
 
@@ -26,6 +57,8 @@ void gameManager::display() {
 
 	//Push display
 	gameWindow.display();
+
+	DisplayClock_.restart();
 }
 
 gameManager::gameManager(uint gameWidth, uint gameHeight)
@@ -38,6 +71,8 @@ gameManager::gameManager(uint gameWidth, uint gameHeight)
 }
 
 void gameManager::run() {
+	demo();
+
 	while (gameWindow.isOpen()) {
 		update();
 

@@ -1,6 +1,10 @@
 #pragma once
 #include "SFML/Graphics.hpp"
 
+#include "Entity.h"
+
+class ItemEntity;
+
 typedef unsigned int uint;
 
 class AnimationComponent {
@@ -28,4 +32,9 @@ public:
 	//Limit the spritesheet to only use [first, last] frames in the animation.
 	//A zero in either position will run from the beginning or until the end, respectively.
 	void setFrames(uint first, uint last);
+};
+
+class InventoryComponent {
+public:
+	std::vector<std::pair<ItemEntity*, unsigned int>> items;
 };
