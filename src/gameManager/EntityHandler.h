@@ -5,10 +5,14 @@
 #include "ResourceHandler.h"
 #include "../entities/entityList.h"
 
+#include <typeinfo>
+
 class EntityHandler {
 private:
 	std::vector<TileEntity*> tileEntities;
 	std::vector<ItemEntity*> itemEntities;
+	
+	std::vector<Conveyor*> conveyorEntities;
 
 public:
 	//Updates all tileEntities and itemEntities
@@ -18,30 +22,23 @@ public:
 	//Clears the memory of all entity lists
 	void freeEntities();
 	
-	//Creates a TileEntity at the given position.
-	template<class TileType>
-	TileEntity& newTile(ResourceHandler& resources, sf::Vector2f pos) {
-		TileType* tile = new TileType(resources, pos);
-		tileEntities.push_back(tile);
+	//Creates a TileEntity of the specified type with specified arguments.
+	template<class TileType, typename ...ARGS>
+	TileType& newTile(ARGS && ...args) {
+		TileType* tile = new TileType(std::forward<ARGS>(args)...);
+		//Push conveyors into separate vector
+		if (typeid(TileType) == typeid(Conveyor)) {
+			conveyorEntities.push_back(tile);
+		}
+		else { tileEntities.push_back(tile); }
 
 		return *tile;
 	}
 
-	//Creates a TileEntity at the Transformables position with the same rotation.
-	template<class TileType>
-	TileEntity& newTile(ResourceHandler& resources, sf::Transformable trans) {
-		TileType* tile = new TileType(resources, trans.getPosition());
-		tile->sprite.setOrigin(trans.getOrigin());
-		tile->sprite.setRotation(trans.getRotation());
-		tileEntities.push_back(tile);
-
-		return *tile;
-	}
-
-	//Creates an ItemEntity at the given position.
-	template<class ItemType>
-	ItemEntity& newItem(ResourceHandler& resources, sf::Vector2f pos) {
-		ItemType* item = new ItemType(resources, pos);
+	//Creates an ItemEntity of the specified type with specified arguments.
+	template<class ItemType, typename ...ARGS>
+	ItemType& newItem(ARGS && ...args) {
+		ItemType* item = new ItemType(std::forward<ARGS>(args)...);
 		itemEntities.push_back(item);
 
 		return *item;
