@@ -13,6 +13,7 @@ private:
 	std::vector<ItemEntity*> itemEntities;
 	
 	std::vector<Conveyor*> conveyorEntities;
+	std::vector<Machine*> machineEntities;
 
 public:
 	//Updates all tileEntities and itemEntities
@@ -26,9 +27,18 @@ public:
 	template<class TileType, typename ...ARGS>
 	TileType& newTile(ARGS && ...args) {
 		TileType* tile = new TileType(std::forward<ARGS>(args)...);
-		//Push conveyors into separate vector
+		//Push conveyors and machines into separate vectors
 		if (typeid(TileType) == typeid(Conveyor)) {
-			conveyorEntities.push_back(tile);
+			conveyorEntities.push_back((Conveyor*)tile);
+		}
+		else if (typeid(TileType) == typeid(Furnace)) {
+			machineEntities.push_back((Furnace*)tile);
+		}
+		else if (typeid(TileType) == typeid(Drill)) {
+			machineEntities.push_back((Drill*)tile);
+		}
+		else if (typeid(TileType) == typeid(Trash)) {
+			machineEntities.push_back((Trash*)tile);
 		}
 		else { tileEntities.push_back(tile); }
 

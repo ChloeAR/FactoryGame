@@ -6,9 +6,10 @@ Metal::Metal(const ResourceHandler& resources, sf::Vector2f pos, Metal::Type typ
 	sprite.setScale(4, 4);
 	sprite.setTextureRect(sf::IntRect(85, 8 + 16 * (int)type, 6, 8));
 	this->type = type;
+
 }
 
 void Metal::smelt() {
 	stage = Stage::Bar;
-	sprite.setTextureRect(sf::IntRect(96, 16 * (int)type, 16, 16));
+	sprite.setTextureRect(sf::IntRect(98, 16 * (int)type + 4, 11, 9));
 }

@@ -5,7 +5,7 @@
 class Metal : public ItemEntity {
 public:
 	enum class Stage {Ore, Bar};
-	enum class Type { Stone, Copper, Iron, Coal };
+	enum class Type { Stone, Copper, Iron, Gold, Coal };
 
 	Metal(const ResourceHandler& resources, sf::Vector2f pos, Metal::Type type);
 

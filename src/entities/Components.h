@@ -36,5 +36,14 @@ public:
 
 class InventoryComponent {
 public:
-	std::vector<std::pair<ItemEntity*, unsigned int>> items;
+	//Internal inventory
+	std::vector<ItemEntity*> items;
+
+	//Destructor to clear and delete an inventory components
+	~InventoryComponent() {
+		while (items.empty() == false) {
+			delete items.back();
+			items.pop_back();
+		}
+	}
 };

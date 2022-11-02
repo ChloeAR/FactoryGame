@@ -1,11 +1,10 @@
 #include "Conveyors.h"
 
 Conveyor::Conveyor(const ResourceHandler& resources, sf::Vector2f pos, uint type)
-	: TileEntity(resources.getTexture(1))
+	: TileEntity(resources.getTexture(1), pos)
 	, animator(8, 3, 16, 16) {
-	sprite.setPosition(pos);
 	sprite.setTextureRect(sf::IntRect(0, 0, 16, 16));
-	sprite.setScale(4, 4);
+	
 
 	//Set Speed and graphics depending on what kind of conveyor it is
 	switch (type) {
@@ -28,13 +27,10 @@ Conveyor::Conveyor(const ResourceHandler& resources, sf::Vector2f pos, uint type
 	placeSound.play();
 }
 
-void Conveyor::addItem(ItemEntity* item) {
-	inventory.items.push_back(std::pair<ItemEntity*, unsigned int>(item, 1));
-}
 
 void Conveyor::displayItems(sf::RenderWindow* game) {
 	for (int i = 0; i < inventory.items.size(); i++) {
-		game->draw(inventory.items.at(i).first->sprite);
+		game->draw(inventory.items.at(i)->sprite);
 	}
 }
 
@@ -44,24 +40,24 @@ ItemEntity* Conveyor::slide(sf::Time timeElapsed) {
 	for (int i = 0; i < inventory.items.size(); i++) {
 		switch ((int)this->sprite.getRotation()) {
 		case 0: {
-			inventory.items.at(i).first->sprite.move(0, -itemspeed);
+			inventory.items.at(i)->sprite.move(0, -itemspeed);
 			break; }
 		case 90: {
-			inventory.items.at(i).first->sprite.move(itemspeed, 0);
+			inventory.items.at(i)->sprite.move(itemspeed, 0);
 			break; }
 		case 180: {
-			inventory.items.at(i).first->sprite.move(0, itemspeed);
+			inventory.items.at(i)->sprite.move(0, itemspeed);
 			break; }
 		case 270: {
-			inventory.items.at(i).first->sprite.move(-itemspeed, 0);
+			inventory.items.at(i)->sprite.move(-itemspeed, 0);
 			break; }
 		}
 	}
 
 	//Test if fall off
 	for (int i = 0; i < inventory.items.size(); i++) {
-		if (!(inventory.items.at(i).first->sprite.getGlobalBounds().intersects(this->sprite.getGlobalBounds()))) {
-			ItemEntity* temp = inventory.items.at(i).first;
+		if (!(inventory.items.at(i)->sprite.getGlobalBounds().intersects(this->sprite.getGlobalBounds()))) {
+			ItemEntity* temp = inventory.items.at(i);
 			inventory.items.erase(inventory.items.begin() + i);
 			return temp;
 		}

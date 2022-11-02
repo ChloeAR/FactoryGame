@@ -23,12 +23,34 @@ void EntityHandler::update(sf::Time timeElapsed) {
 				break;
 			}
 		}
+
+		//Prevent OOB
+		if (i >= itemEntities.size()) { return; }
+
+		//Check if unclaimed entities are in a machine
+		for (unsigned int j = 0; j < machineEntities.size(); j++) {
+			if (itemEntities.at(i)->sprite.getGlobalBounds().intersects(machineEntities.at(j)->sprite.getGlobalBounds())) {
+				machineEntities.at(j)->addItem(itemEntities.at(i));
+				itemEntities.erase(itemEntities.begin() + i);
+				break;
+			}
+
+		}
+
+		//Prevent OOB
+		if (i >= itemEntities.size()) { return; }
 	}
 
 	// Slide all items present in conveyors and return fallen items to the itemList
 	for (unsigned int i = 0; i < conveyorEntities.size(); i++) {
 		ItemEntity* temp = conveyorEntities.at(i)->slide(timeElapsed);
 		if (temp != NULL) { itemEntities.push_back(temp); }
+	}
+
+	// Process all machines and return items into the global itemList
+	for (unsigned int i = 0; i < machineEntities.size(); i++) {
+		ItemEntity* temp = machineEntities.at(i)->process(timeElapsed);
+		if (temp != nullptr) { itemEntities.push_back(temp); }
 	}
 }
 
@@ -47,6 +69,11 @@ void EntityHandler::draw(sf::RenderWindow* window) {
 		conveyorEntities.at(i)->displayItems(window);
 	}
 	
+	//Draw all other machines
+	for (unsigned int i = 0; i < machineEntities.size(); i++) {
+		window->draw(machineEntities.at(i)->sprite);
+	}
+
 	//Draw all itemEntities in the list to the provided window
 	for (unsigned int i = 0; i < itemEntities.size(); i++) {
 		window->draw(itemEntities.at(i)->sprite);
@@ -71,4 +98,11 @@ void EntityHandler::freeEntities() {
 		delete conveyorEntities.back();
 		conveyorEntities.pop_back();
 	}
+
+	//Clear machineEntities
+	while (machineEntities.size() > 0) {
+		delete machineEntities.back();
+		machineEntities.pop_back();
+	}
 }
+

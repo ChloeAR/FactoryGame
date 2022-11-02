@@ -16,7 +16,11 @@ protected:
 
 class TileEntity : public Entity {
 protected:
-	TileEntity(sf::Texture& texture) : Entity(texture) {};
+	TileEntity(sf::Texture& texture, sf::Vector2f& pos) : Entity(texture) {
+		sprite.setPosition(pos + sf::Vector2f(32, 32));
+		sprite.setOrigin(8, 8);
+		sprite.setScale(4, 4);
+	}
 
 	sf::Sound placeSound;
 };
@@ -24,5 +28,4 @@ protected:
 class ItemEntity : public Entity {
 protected:
 	ItemEntity(sf::Texture& texture) : Entity(texture) {};
-
 };

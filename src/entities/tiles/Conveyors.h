@@ -19,8 +19,10 @@ public:
 		animator.runSheet(this->sprite);
 	}
 
-	// Adds an itemEntity* to this conveyors Inventory
-	void addItem(ItemEntity* item);
+	//Adds an item to the Conveyor's inventory
+	void addItem(ItemEntity* item) {
+		 { inventory.items.push_back(item); }
+	}
 
 	//Renders all of the items in the conveyor
 	void displayItems(sf::RenderWindow* game);

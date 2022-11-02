@@ -13,11 +13,27 @@ void ResourceHandler::initTextures() {
 	tmpPtr = std::make_unique<sf::Texture>();
 	tmpPtr->loadFromFile("data/textures/items/ores.png");				//2
 	TextureMap.push_back(std::move(tmpPtr));
+
+	tmpPtr = std::make_unique<sf::Texture>();
+	tmpPtr->loadFromFile("data/textures/machines/furnace.png");			//3
+	TextureMap.push_back(std::move(tmpPtr));
+
+	tmpPtr = std::make_unique<sf::Texture>();
+	tmpPtr->loadFromFile("data/textures/machines/drill.png");			//4
+	TextureMap.push_back(std::move(tmpPtr));
+
+	tmpPtr = std::make_unique<sf::Texture>();
+	tmpPtr->loadFromFile("data/textures/machines/void.png");			//5
+	TextureMap.push_back(std::move(tmpPtr));
 }
 
 void ResourceHandler::initSounds() {
 	auto tmpPtr = std::make_unique<sf::SoundBuffer>();
-	tmpPtr->loadFromFile("data/audio/click1.wav");
+	tmpPtr->loadFromFile("data/audio/click1.wav");						//x 0
+	SoundMap.push_back(std::move(tmpPtr));
+
+	tmpPtr = std::make_unique<sf::SoundBuffer>();
+	tmpPtr->loadFromFile("data/audio/smelt.wav");						//x 1
 	SoundMap.push_back(std::move(tmpPtr));
 }
 
