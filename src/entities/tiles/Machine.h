@@ -21,6 +21,8 @@ public:
 		return nullptr;
 	}
 
+	virtual ~Machine() {}
+
 protected:
 	InventoryComponent* inventory_ = nullptr;
 

@@ -13,8 +13,9 @@ public:
 		smeltSound.setLoop(true);
 	}
 
-	~Furnace() {
+	~Furnace() override{
 		delete inventory_;
+		smeltSound.stop();
 	}
 
 	void update(sf::Time timeElapsed) override {}
