@@ -4,7 +4,7 @@
 
 class Furnace : public Machine {
 public:
-	Furnace(const ResourceHandler& resources, sf::Vector2f pos, int nul) : Machine(resources.getTexture(3), pos) {
+	Furnace(const ResourceHandler& resources, sf::Vector2f pos, ...) : Machine(resources.getTexture(3), pos) {
 		sprite.setTextureRect(sf::IntRect(0, 0, 16, 16));
 		inventory_ = new InventoryComponent;
 		sprite.setScale(4, 4);
@@ -47,19 +47,19 @@ public:
 
 				// Move item to output
 				switch ((int)this->sprite.getRotation()) {
-				case 0: {
+				case 90: {
 					item->sprite.setPosition(this->sprite.getPosition() + sf::Vector2f(32, -22));
 					break;
 				}
-				case 90: {
+				case 180: {
 					item->sprite.setPosition(this->sprite.getPosition() + sf::Vector2f(-18, 32));
 					break;
 				}
-				case 180: {
+				case 270: {
 					item->sprite.setPosition(this->sprite.getPosition() + sf::Vector2f(-32 - 44, -22));
 					break;
 				}
-				case 270: {
+				case 0: {
 					item->sprite.setPosition(this->sprite.getPosition() + sf::Vector2f(-22, -32 - 36));
 					break;
 				}

@@ -3,7 +3,7 @@
 Conveyor::Conveyor(const ResourceHandler& resources, sf::Vector2f pos, uint type)
 	: TileEntity(resources.getTexture(1), pos)
 	, animator(8, 3, 16, 16) {
-	sprite.setTextureRect(sf::IntRect(0, 0, 16, 16));
+	sprite.setTextureRect(sf::IntRect(0, (type * 16) - 16, 16, 16));
 	
 
 	//Set Speed and graphics depending on what kind of conveyor it is

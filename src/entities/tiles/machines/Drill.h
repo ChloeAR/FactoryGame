@@ -22,19 +22,19 @@ public:
 			Metal* item = new Metal(*ResourceHand_, /*POSITION*/this->sprite.getPosition() + sf::Vector2f(32, -32), oreType);
 			// Move item to output
 			switch ((int)this->sprite.getRotation()) {
-			case 0: {
+			case 90: {
 				item->sprite.setPosition(this->sprite.getPosition() + sf::Vector2f(32, -16));
 				break;
 			}
-			case 90: {
+			case 180: {
 				item->sprite.setPosition(this->sprite.getPosition() + sf::Vector2f(-12, 32));
 				break;
 			}
-			case 180: {
+			case 270: {
 				item->sprite.setPosition(this->sprite.getPosition() + sf::Vector2f(-32 - 24, -16));
 				break;
 			}
-			case 270: {
+			case 0: {
 				item->sprite.setPosition(this->sprite.getPosition() + sf::Vector2f(-12, -32 - 32));
 				break;
 			}
