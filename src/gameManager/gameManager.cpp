@@ -28,11 +28,24 @@ void gameManager::update() {
 			EntityHandler_.freeEntities();
 			gameWindow.close();
 		}
+
+		// Handle Input
+		if (event.type == sf::Event::KeyPressed) {
+			if (event.key.code == sf::Keyboard::R) {
+				cursor.rotate(90);
+			}
+		}
 	}
 
 	//Update component systems at most 60 times a second
 	sf::Time timeElapsed = Clock_.getElapsedTime();
 	if (timeElapsed.asMilliseconds() > 16) { 
+		//Update cursor
+		sf::Vector2i mousePos = sf::Mouse::getPosition(gameWindow);
+		mousePos.x = mousePos.x - (mousePos.x % 64) + 32;
+		mousePos.y = mousePos.y - (mousePos.y % 64) + 32;
+		cursor.setPosition(sf::Vector2f(mousePos));
+
 		EntityHandler_.update(timeElapsed); Clock_.restart(); }
 }
 
@@ -44,6 +57,7 @@ void gameManager::display() {
 
 	//Update display
 	EntityHandler_.draw(&gameWindow);
+	gameWindow.draw(cursor);
 
 	//Push display
 	gameWindow.display();
@@ -52,12 +66,17 @@ void gameManager::display() {
 }
 
 gameManager::gameManager(uint gameWidth, uint gameHeight)
-    : gameWindow(sf::VideoMode(gameWidth, gameHeight), "FactoryGame", sf::Style::Close) {
+    : gameWindow(sf::VideoMode(gameWidth, gameHeight), "FactoryGame", sf::Style::Close)
+	, cursor(ResourceHandler_.getTexture(0)) {
 	
 	//Center Screen (40 is approx taskbar height) 
 	int xPos = (sf::VideoMode::getDesktopMode().width - gameWidth) / 2;
 	int yPos = (sf::VideoMode::getDesktopMode().height - gameHeight) / 2 - 40;
 	gameWindow.setPosition(sf::Vector2i(xPos, yPos));
+
+	//Set up UI
+	cursor.setScale(4, 4);
+	cursor.setOrigin(8, 8);
 }
 
 void gameManager::run() {

@@ -29,10 +29,14 @@ private:
 	//Creates all of the required entities to run a demo
 	void demo();
 
+	//UI
+	sf::Sprite cursor;
+
 public:
 	//Game constructor taking window size arguments
 	gameManager(uint gameWidth, uint gameHeight);
 
 	//Processes game loop until window is closed.
 	void run();
+
 };
