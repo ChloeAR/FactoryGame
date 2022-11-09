@@ -12,7 +12,7 @@ public:
 	}
 
 	// If machine has an inventory, we add an item to it.
-	void addItem(ItemEntity* item) {
+	virtual void addItem(ItemEntity* item) {
 		if (inventory_ != nullptr) { inventory_->items.push_back(item); }
 	}
 
@@ -21,7 +21,11 @@ public:
 		return nullptr;
 	}
 
-	virtual ~Machine() {}
+	virtual ~Machine() {
+		if (inventory_ != nullptr) {
+			delete inventory_;
+		}
+	}
 
 protected:
 	InventoryComponent* inventory_ = nullptr;
@@ -30,15 +34,13 @@ protected:
 
 class Trash : public Machine {
 public:
-	Trash(ResourceHandler& resources, sf::Vector2f pos) : Machine(resources.getTexture(5), pos) {
-		
-		inventory_ = new InventoryComponent; }
+	Trash(ResourceHandler& resources, sf::Vector2f pos) : Machine(resources.getTexture(5), pos) {}
+
+	void addItem(ItemEntity* item) override {
+		delete item;
+	}
 
 	ItemEntity* process(sf::Time timeElapsed) override {
-		if (inventory_->items.size() > 0) {
-			delete inventory_->items.front();
-			inventory_->items.erase(inventory_->items.begin());
-		}
 		return NULL;
 	}
 };

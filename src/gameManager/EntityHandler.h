@@ -6,13 +6,14 @@
 #include "../entities/entityList.h"
 
 #include <typeinfo>
+#include <memory>
 
 class EntityHandler {
 private:
 	std::vector<TileEntity*> tileEntities;
 	std::vector<ItemEntity*> itemEntities;
 	
-	std::vector<Conveyor*> conveyorEntities;
+	std::vector<std::shared_ptr<Conveyor>> conveyorEntities;
 	std::vector<Machine*> machineEntities;
 
 public:
@@ -29,7 +30,9 @@ public:
 		TileType* tile = new TileType(std::forward<ARGS>(args)...);
 		//Push conveyors and machines into separate vectors
 		if (typeid(TileType) == typeid(Conveyor)) {
-			conveyorEntities.push_back((Conveyor*)tile);
+			std::shared_ptr<Conveyor> newTile((Conveyor*)tile);
+			conveyorEntities.push_back(newTile);
+			return *(TileType*)newTile.get();
 		}
 		else if (typeid(TileType) == typeid(Furnace)) {
 			machineEntities.push_back((Furnace*)tile);

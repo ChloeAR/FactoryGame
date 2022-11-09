@@ -15,6 +15,7 @@ public:
 
 	~Furnace() override{
 		delete inventory_;
+		inventory_ = nullptr;
 		smeltSound.stop();
 	}
 
