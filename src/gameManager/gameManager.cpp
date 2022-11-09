@@ -1,5 +1,32 @@
 #include "gameManager.h"
 
+void gameManager::inputHandler(sf::Event event) {
+	const sf::Vector2f cursorPos = cursor.getPosition() - sf::Vector2f(32, 32);
+
+	switch (event.key.code) {
+		case sf::Keyboard::R: {
+			cursor.rotate(90);
+			break;
+		}
+		case sf::Keyboard::Num1: {
+			Conveyor& conv = EntityHandler_.newTile<Conveyor>(ResourceHandler_, cursorPos, 3);
+			conv.sprite.setRotation(cursor.getRotation());
+			break;
+		}
+		case sf::Keyboard::Num2: {
+			Drill& drill = EntityHandler_.newTile<Drill>(&ResourceHandler_, cursorPos, (Metal::Type::Iron));
+			drill.sprite.setRotation(cursor.getRotation());
+			break;
+		}
+		case sf::Keyboard::Num3: {
+			Furnace& furnace = EntityHandler_.newTile<Furnace>(ResourceHandler_, cursorPos);
+			furnace.sprite.setRotation(cursor.getRotation());
+			break;
+		}
+		default: {}
+	}
+}
+
 void gameManager::demo() {
 	for (int i = 0; i < 5; i++) {
 		//Spawn Drills and Voids
@@ -9,7 +36,7 @@ void gameManager::demo() {
 		//Conveyors and Furnaces
 		for (int j = 0; j < 9; j++) {
 			if (j == 4) {
-				EntityHandler_.newTile<Furnace>(ResourceHandler_, sf::Vector2f(64 * j + 128, 128 * i + (64 * 4)), 3);
+				EntityHandler_.newTile<Furnace>(ResourceHandler_, sf::Vector2f(64 * j + 128, 128 * i + (64 * 4)));
 			}
 			else {
 				Conveyor& conv = EntityHandler_.newTile<Conveyor>(ResourceHandler_, sf::Vector2f(64 * j + 128, 128 * i + (64 * 4)), 3);
@@ -31,9 +58,7 @@ void gameManager::update() {
 
 		// Handle Input
 		if (event.type == sf::Event::KeyPressed) {
-			if (event.key.code == sf::Keyboard::R) {
-				cursor.rotate(90);
-			}
+			inputHandler(event);
 		}
 	}
 
@@ -80,7 +105,7 @@ gameManager::gameManager(uint gameWidth, uint gameHeight)
 }
 
 void gameManager::run() {
-	demo();
+	//demo();
 
 	while (gameWindow.isOpen()) {
 		update();

@@ -32,6 +32,8 @@ private:
 	//UI
 	sf::Sprite cursor;
 
+	void inputHandler(sf::Event event);
+
 public:
 	//Game constructor taking window size arguments
 	gameManager(uint gameWidth, uint gameHeight);
