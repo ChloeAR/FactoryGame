@@ -23,6 +23,15 @@ void gameManager::inputHandler(sf::Event event) {
 			furnace.sprite.setRotation(cursor.getRotation());
 			break;
 		}
+		case sf::Keyboard::Num4: {
+			EntityHandler_.newTile<Trash>(ResourceHandler_, cursorPos);
+			break;
+		}
+		case sf::Keyboard::Num5: {
+			Grabber& grabber = EntityHandler_.newTile<Grabber>(ResourceHandler_, cursorPos, EntityHandler_);
+			grabber.sprite.setRotation(cursor.getRotation());
+			break;
+		}
 		default: {}
 	}
 }

@@ -25,6 +25,10 @@ void ResourceHandler::initTextures() {
 	tmpPtr = std::make_unique<sf::Texture>();
 	tmpPtr->loadFromFile("data/textures/machines/void.png");			//5
 	TextureMap.push_back(std::move(tmpPtr));
+
+	tmpPtr = std::make_unique<sf::Texture>();
+	tmpPtr->loadFromFile("data/textures/machines/grabber.png");			//6
+	TextureMap.push_back(std::move(tmpPtr));
 }
 
 void ResourceHandler::initSounds() {

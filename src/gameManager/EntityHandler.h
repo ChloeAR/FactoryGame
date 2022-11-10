@@ -8,6 +8,8 @@
 #include <typeinfo>
 #include <memory>
 
+class Grabber;
+
 class EntityHandler {
 private:
 	std::vector<TileEntity*> tileEntities;
@@ -23,6 +25,17 @@ public:
 	void draw(sf::RenderWindow* window);
 	//Clears the memory of all entity lists
 	void freeEntities();
+
+	//Returns a shared pointer to a conveyor (if there is one) intersecting the specified pos. Otherwise returns nullptr.		
+	std::shared_ptr<Conveyor> conveyorAtPoint(sf::FloatRect pos) const{
+		for (unsigned int i = 0; i < conveyorEntities.size(); i++) {
+			if (conveyorEntities.at(i).get()->sprite.getGlobalBounds().intersects(pos)) {
+				return conveyorEntities.at(i);
+			}
+		}
+
+		return nullptr;
+	}
 	
 	//Creates a TileEntity of the specified type with specified arguments.
 	template<class TileType, typename ...ARGS>
@@ -42,6 +55,9 @@ public:
 		}
 		else if (typeid(TileType) == typeid(Trash)) {
 			machineEntities.push_back((Trash*)tile);
+		}
+		else if (typeid(TileType) == typeid(Grabber)) {
+			machineEntities.push_back((Grabber*)tile);
 		}
 		else { tileEntities.push_back(tile); }
 

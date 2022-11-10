@@ -24,6 +24,16 @@ public:
 		 { inventory.items.push_back(item); }
 	}
 
+	//Returns the last item on the conveyor
+	ItemEntity* takeItem() {
+		if (inventory.items.size() > 0) {
+			ItemEntity* item = inventory.items.back();
+			inventory.items.pop_back();
+			return item;
+		}
+		return nullptr;
+	}
+
 	//Renders all of the items in the conveyor
 	void displayItems(sf::RenderWindow* game);
 
