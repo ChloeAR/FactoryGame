@@ -30,9 +30,11 @@ void EntityHandler::update(sf::Time timeElapsed) {
 		//Check if unclaimed entities are in a machine
 		for (unsigned int j = 0; j < machineEntities.size(); j++) {
 			if (itemEntities.at(i)->sprite.getGlobalBounds().intersects(machineEntities.at(j)->sprite.getGlobalBounds())) {
-				machineEntities.at(j)->addItem(itemEntities.at(i));
-				itemEntities.erase(itemEntities.begin() + i);
-				break;
+				if (machineEntities.at(j)->addItem(itemEntities.at(i))) {
+					itemEntities.erase(itemEntities.begin() + i);
+				}
+					break;
+				
 			}
 
 		}

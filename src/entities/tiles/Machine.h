@@ -11,9 +11,10 @@ public:
 		return *inventory_;
 	}
 
-	// If machine has an inventory, we add an item to it.
-	virtual void addItem(ItemEntity* item) {
+	// If machine has an inventory, we add an item to it. Returns false if no inventory component exists.
+	virtual bool addItem(ItemEntity* item) {
 		if (inventory_ != nullptr) { inventory_->items.push_back(item); }
+		else { return false; }
 	}
 
 	// Machine processes and returns an item to the global space.
@@ -36,8 +37,9 @@ class Trash : public Machine {
 public:
 	Trash(ResourceHandler& resources, sf::Vector2f pos) : Machine(resources.getTexture(5), pos) {}
 
-	void addItem(ItemEntity* item) override {
+	bool addItem(ItemEntity* item) override {
 		delete item;
+		return true;
 	}
 
 	ItemEntity* process(sf::Time timeElapsed) override {
