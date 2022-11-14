@@ -1,5 +1,7 @@
 #pragma once
 #include "../Entity.h"
+#include "../Components.h"
+
 #include <vector>
 
 class Conveyor : public TileEntity {

@@ -1,8 +1,6 @@
 #pragma once
 
 #include "../gameManager/ResourceHandler.h"
-#include "Components.h"
-
 
 class Entity {
 public:
@@ -32,7 +30,8 @@ protected:
 
 class ItemEntity : public Entity {
 public:
-	virtual ~ItemEntity() {}
+	~ItemEntity() {}
+
 protected:
 	ItemEntity(sf::Texture& texture) : Entity(texture) {};
 };
