@@ -29,7 +29,7 @@ Conveyor::Conveyor(const ResourceHandler& resources, sf::Vector2f pos, uint type
 
 
 void Conveyor::displayItems(sf::RenderWindow* game) {
-	for (int i = 0; i < inventory.items.size(); i++) {
+	for (unsigned int i = 0; i < inventory.items.size(); i++) {
 		game->draw(inventory.items.at(i)->sprite);
 	}
 }
@@ -37,7 +37,7 @@ void Conveyor::displayItems(sf::RenderWindow* game) {
 ItemEntity* Conveyor::slide(sf::Time timeElapsed) {
 	/* Push Items - - - - - - -- -  -- - - - - -- - - - -- - - - - - - -*/
 	float itemspeed = (float)timeElapsed.asMicroseconds() / this->speedMillis / 1000 * 4;
-	for (int i = 0; i < inventory.items.size(); i++) {
+	for (unsigned int i = 0; i < inventory.items.size(); i++) {
 		switch ((int)this->sprite.getRotation()) {
 		case 0: {
 			inventory.items.at(i)->sprite.move(0, -itemspeed);
@@ -55,7 +55,7 @@ ItemEntity* Conveyor::slide(sf::Time timeElapsed) {
 	}
 
 	//Test if fall off
-	for (int i = 0; i < inventory.items.size(); i++) {
+	for (unsigned int i = 0; i < inventory.items.size(); i++) {
 		if (!(inventory.items.at(i)->sprite.getGlobalBounds().intersects(this->sprite.getGlobalBounds()))) {
 			ItemEntity* temp = inventory.items.at(i);
 			inventory.items.erase(inventory.items.begin() + i);

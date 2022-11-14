@@ -25,8 +25,8 @@ void AnimationComponent::runSheet(sf::Sprite& sprite) {
 		}
 
 		//Shift the texture rectangle to be in the spot of the new frame
-		int pixelsRight = (currentFrame - 1) * pixelWidth;
-		int pixelsDown = 0;
+		unsigned int pixelsRight = (currentFrame - 1) * pixelWidth;
+		unsigned int pixelsDown = 0;
 		while (pixelsRight >= columns * pixelWidth) {
 			pixelsRight = pixelsRight - (columns * pixelWidth);
 			pixelsDown = pixelsDown + pixelHeight;

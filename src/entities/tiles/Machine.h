@@ -13,7 +13,7 @@ public:
 
 	// If machine has an inventory, we add an item to it. Returns false if no inventory component exists.
 	virtual bool addItem(ItemEntity* item) {
-		if (inventory_ != nullptr) { inventory_->items.push_back(item); }
+		if (inventory_ != nullptr) { inventory_->items.push_back(item); return true; }
 		else { return false; }
 	}
 

@@ -36,6 +36,17 @@ public:
 
 		return nullptr;
 	}
+
+	//Returns a reference to the TileEntity at a specified position
+	TileEntity* tileAtPoint(sf::FloatRect pos) {
+		for (unsigned int i = 0; i < tileEntities.size(); i++) {
+			if (tileEntities.at(i)->sprite.getGlobalBounds().intersects(pos)) {
+				return tileEntities.at(i);
+			}
+		}
+
+		return nullptr;
+	}
 	
 	//Creates a TileEntity of the specified type with specified arguments.
 	template<class TileType, typename ...ARGS>

@@ -9,3 +9,5 @@
 #include "tiles/machines/Furnace.h"
 #include "tiles/machines/Drill.h"
 #include "tiles/machines/Grabber.h"
+
+#include "tiles/Ore.h"
