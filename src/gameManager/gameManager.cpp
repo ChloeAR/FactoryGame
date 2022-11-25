@@ -3,33 +3,17 @@
 void gameManager::inputHandler(sf::Event event) {
 	const sf::Vector2f cursorPos = cursor.getPosition() - sf::Vector2f(32, 32);
 
+	if (event.key.code >= sf::Keyboard::Num1 && event.key.code <= sf::Keyboard::Num9) {
+		menu.control((int)event.key.code - 26);
+	}
+
 	switch (event.key.code) {
 		case sf::Keyboard::R: {
 			cursor.rotate(90);
 			break;
 		}
-		case sf::Keyboard::Num1: {
-			Conveyor& conv = EntityHandler_.newTile<Conveyor>(ResourceHandler_, cursorPos, 3);
-			conv.sprite.setRotation(cursor.getRotation());
-			break;
-		}
-		case sf::Keyboard::Num2: {
-			Drill& drill = EntityHandler_.newTile<Drill>(&ResourceHandler_, cursorPos, (Metal::Type::Iron));
-			drill.sprite.setRotation(cursor.getRotation());
-			break;
-		}
-		case sf::Keyboard::Num3: {
-			Furnace& furnace = EntityHandler_.newTile<Furnace>(ResourceHandler_, cursorPos);
-			furnace.sprite.setRotation(cursor.getRotation());
-			break;
-		}
-		case sf::Keyboard::Num4: {
-			EntityHandler_.newTile<Trash>(ResourceHandler_, cursorPos);
-			break;
-		}
-		case sf::Keyboard::Num5: {
-			Grabber& grabber = EntityHandler_.newTile<Grabber>(ResourceHandler_, cursorPos, EntityHandler_);
-			grabber.sprite.setRotation(cursor.getRotation());
+		case sf::Keyboard::Escape: {  
+			menu.control(0);
 			break;
 		}
 		default: {}
@@ -91,6 +75,7 @@ void gameManager::display() {
 
 	//Update display
 	EntityHandler_.draw(&gameWindow);
+	menu.display(gameWindow);
 	gameWindow.draw(cursor);
 
 	//Push display
