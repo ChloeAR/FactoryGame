@@ -3,33 +3,17 @@
 void gameManager::inputHandler(sf::Event event) {
 	const sf::Vector2f cursorPos = cursor.getPosition() - sf::Vector2f(32, 32);
 
+	if (event.key.code >= sf::Keyboard::Num1 && event.key.code <= sf::Keyboard::Num9) {
+		menu.control((int)event.key.code - 26);
+	}
+
 	switch (event.key.code) {
 		case sf::Keyboard::R: {
 			cursor.rotate(90);
 			break;
 		}
-		case sf::Keyboard::Num1: {
-			Conveyor& conv = EntityHandler_.newTile<Conveyor>(ResourceHandler_, cursorPos, 3);
-			conv.sprite.setRotation(cursor.getRotation());
-			break;
-		}
-		case sf::Keyboard::Num2: {
-			Drill& drill = EntityHandler_.newTile<Drill>(&ResourceHandler_, cursorPos, (Metal::Type::Iron));
-			drill.sprite.setRotation(cursor.getRotation());
-			break;
-		}
-		case sf::Keyboard::Num3: {
-			Furnace& furnace = EntityHandler_.newTile<Furnace>(ResourceHandler_, cursorPos);
-			furnace.sprite.setRotation(cursor.getRotation());
-			break;
-		}
-		case sf::Keyboard::Num4: {
-			EntityHandler_.newTile<Trash>(ResourceHandler_, cursorPos);
-			break;
-		}
-		case sf::Keyboard::Num5: {
-			Grabber& grabber = EntityHandler_.newTile<Grabber>(ResourceHandler_, cursorPos, EntityHandler_);
-			grabber.sprite.setRotation(cursor.getRotation());
+		case sf::Keyboard::Escape: {  
+			menu.control(0);
 			break;
 		}
 		default: {}
@@ -39,8 +23,9 @@ void gameManager::inputHandler(sf::Event event) {
 void gameManager::demo() {
 	for (int i = 0; i < 5; i++) {
 		//Spawn Drills and Voids
-		EntityHandler_.newTile<Drill>(&ResourceHandler_, sf::Vector2f(64, 128 * i + (64 * 4)), (Metal::Type)(i) );
+		Drill& dril = EntityHandler_.newTile<Drill>(&ResourceHandler_, sf::Vector2f(64, 128 * i + (64 * 4)), (Metal::Type)(i) );
 		EntityHandler_.newTile<Trash>(ResourceHandler_, sf::Vector2f(64 * 9 + 128, 128 * i + (64 * 4)));
+		dril.sprite.rotate(90);
 
 		//Conveyors and Furnaces
 		for (int j = 0; j < 9; j++) {
@@ -91,6 +76,7 @@ void gameManager::display() {
 
 	//Update display
 	EntityHandler_.draw(&gameWindow);
+	menu.display(gameWindow);
 	gameWindow.draw(cursor);
 
 	//Push display
@@ -101,7 +87,8 @@ void gameManager::display() {
 
 gameManager::gameManager(uint gameWidth, uint gameHeight)
     : gameWindow(sf::VideoMode(gameWidth, gameHeight), "FactoryGame", sf::Style::Close)
-	, cursor(ResourceHandler_.getTexture(0)) {
+	, cursor(ResourceHandler_.getTexture(0)) 
+	, menu(this) {
 	
 	//Center Screen (40 is approx taskbar height) 
 	int xPos = (sf::VideoMode::getDesktopMode().width - gameWidth) / 2;

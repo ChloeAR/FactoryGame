@@ -5,6 +5,8 @@
 #include "EntityHandler.h"
 #include "ResourceHandler.h"
 
+#include "menu/Menu.h"
+
 typedef unsigned int uint;
 
 class gameManager {
@@ -26,10 +28,8 @@ private:
 	//Updates display
 	void display();
 
-	//Creates all of the required entities to run a demo
-	void demo();
-
 	//UI
+	Menu menu;
 	sf::Sprite cursor;
 
 	void inputHandler(sf::Event event);
@@ -41,4 +41,8 @@ public:
 	//Processes game loop until window is closed.
 	void run();
 
+	//Creates all of the required entities to run a demo
+	void demo();
+
+	friend class Menu;
 };
