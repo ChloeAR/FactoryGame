@@ -43,4 +43,6 @@ public:
 
 	//Creates all of the required entities to run a demo
 	void demo();
+
+	friend class Menu;
 };

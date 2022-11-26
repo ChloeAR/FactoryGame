@@ -86,7 +86,8 @@ void gameManager::display() {
 
 gameManager::gameManager(uint gameWidth, uint gameHeight)
     : gameWindow(sf::VideoMode(gameWidth, gameHeight), "FactoryGame", sf::Style::Close)
-	, cursor(ResourceHandler_.getTexture(0)) {
+	, cursor(ResourceHandler_.getTexture(0)) 
+	, menu(this) {
 	
 	//Center Screen (40 is approx taskbar height) 
 	int xPos = (sf::VideoMode::getDesktopMode().width - gameWidth) / 2;

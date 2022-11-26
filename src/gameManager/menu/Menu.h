@@ -7,6 +7,8 @@
 
 #include "../EntityHandler.h"
 
+class gameManager;
+
 typedef void (*Function_Ptr)();
 
 struct Table_Entry {
@@ -26,27 +28,9 @@ public:
 	size_t TableSize;
 };
 
-static class Menu {
+class Menu {
 public:
-	Menu() { 
-		//Prepare menu
-		Menus.push(&rootMenu);
-
-
-		//Prepare display of menu
-		textFont.loadFromFile("data/arial.ttf");
-		menuText.setFont(textFont);
-		menuText.setFillColor(sf::Color::Green);
-		menuText.setCharacterSize(24);
-		menuText.setPosition(20, 20);
-
-		std::stringstream tempMenuText;
-		for (int i = 0; i < Menus.top()->TableSize; i++) {
-			tempMenuText << (Menus.top()->OptionTable)[i].expected << ")\t" << (Menus.top()->OptionTable)[i].title << "\n";
-		}
-	
-		menuText.setString(tempMenuText.str());
-	}
+	Menu(gameManager*);
 
 	void display(sf::RenderWindow& display) {
 		display.draw(menuText);
@@ -76,18 +60,20 @@ public:
 	}
 
 private:
+	inline static gameManager* game;
+
 	static std::stack<const Submenu*> Menus;
 
-	static const Submenu rootMenu, buildMenu;
+	static const Submenu rootMenu, buildMenu, conveyorMenu, machinesMenu;
 
-	static const Table_Entry rootMenu_[], buildMenu_[];
-	static const size_t rootMenuSize, buildMenuSize;
+	static const Table_Entry rootMenu_[], buildMenu_[], conveyorMenu_[];// , machinesMenu_[];
+	static const size_t rootMenuSize, buildMenuSize, conveyorMenuSize;// , machinesMenuSize;
 
 	sf::Font textFont;
 	sf::Text menuText;
 	
 
 private: // Submenu Function Declarations
-	friend void openBuildMenu(), runDemo();
+	friend void openBuildMenu(), runDemo(), openConveyorsMenu(), openMachinesMenu();
 };
 
