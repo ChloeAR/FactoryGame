@@ -16,14 +16,14 @@ OBJ_FILES := $(patsubst $(SRC_DIR)%.cpp,$(BUILD_DIR)/%.o,$(SRC_FILES))
 
 # Creates an executable from object files as well as setting the correct environmental variable.
 factory: $(OBJ_FILES)
-	g++ -o $@ $(OBJ_FILES) $(LIB_DIR) $(LIBS)
+	g++ -std=c++17 -o $@ $(OBJ_FILES) $(LIB_DIR) $(LIBS)
 	echo 'export LD_LIBRARY_PATH=./shared && ./factory' > LaunchGame.out
 	chmod +x ./LaunchGame.out
 
 # Creates required build/ directories and then creates the object file to go inside.
 $(BUILD_DIR)/%.o : $(SRC_DIR)/%.cpp $(HEADERS)
 	mkdir -p $(shell dirname $@)
-	g++ $(INC_DIR) -c $< -o $@ 
+	g++ -std=c++17 $(INC_DIR) -c $< -o $@ 
 	
 # Deletes all the build files, or if they don't exist, do nothing
 .PHONY: clean
