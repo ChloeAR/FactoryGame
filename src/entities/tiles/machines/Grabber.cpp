@@ -1,5 +1,7 @@
 #include "Grabber.h"
 
+#include "../../../gameManager/EntityHandler.h"
+
 Grabber::Grabber(const ResourceHandler& resources, sf::Vector2f pos, const EntityHandler& Entities)
 	: Machine(resources.getTexture(6), pos)
 	, EntityHandler_(Entities) {
