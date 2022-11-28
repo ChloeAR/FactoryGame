@@ -6,6 +6,7 @@
 #include "SFML/Graphics.hpp"
 
 #include "../EntityHandler.h"
+#include "../ResourceHandler.h"
 
 class gameManager;
 
@@ -60,20 +61,25 @@ public:
 	}
 
 private:
+	// This is really bad and would be fine if I knew about function pointers when I started x(
 	inline static gameManager* game;
+	inline static EntityHandler* EntHandler;
+	inline static ResourceHandler* ResHandler;
+	inline static sf::Sprite* cursor;
 
 	static std::stack<const Submenu*> Menus;
 
-	static const Submenu rootMenu, buildMenu, conveyorMenu, machinesMenu;
+	static const Submenu rootMenu, buildMenu, conveyorMenu, machinesMenu, oresMenu;
 
-	static const Table_Entry rootMenu_[], buildMenu_[], conveyorMenu_[];// , machinesMenu_[];
-	static const size_t rootMenuSize, buildMenuSize, conveyorMenuSize;// , machinesMenuSize;
+	static const Table_Entry rootMenu_[], buildMenu_[], conveyorMenu_[], machinesMenu_[], oresMenu_[];
+	static const size_t rootMenuSize, buildMenuSize, conveyorMenuSize, machinesMenuSize, oresMenuSize;
 
 	sf::Font textFont;
 	sf::Text menuText;
 	
 
 private: // Submenu Function Declarations
-	friend void openBuildMenu(), runDemo(), openConveyorsMenu(), openMachinesMenu();
+	friend void openBuildMenu(), runDemo(), openConveyorsMenu(), openMachinesMenu(), openOresMenu(), spawnConveyor(int), spawnMachine(int), spawnOre(int);
+	friend void spawnTrash(), reset();
 };
 

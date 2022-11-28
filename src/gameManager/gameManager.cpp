@@ -23,8 +23,9 @@ void gameManager::inputHandler(sf::Event event) {
 void gameManager::demo() {
 	for (int i = 0; i < 5; i++) {
 		//Spawn Drills and Voids
-		EntityHandler_.newTile<Drill>(&ResourceHandler_, sf::Vector2f(64, 128 * i + (64 * 4)), (Metal::Type)(i) );
+		Drill& dril = EntityHandler_.newTile<Drill>(&ResourceHandler_, sf::Vector2f(64, 128 * i + (64 * 4)), (Metal::Type)(i) );
 		EntityHandler_.newTile<Trash>(ResourceHandler_, sf::Vector2f(64 * 9 + 128, 128 * i + (64 * 4)));
+		dril.sprite.rotate(90);
 
 		//Conveyors and Furnaces
 		for (int j = 0; j < 9; j++) {
