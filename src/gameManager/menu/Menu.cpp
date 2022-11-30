@@ -127,8 +127,11 @@ Menu::Menu(gameManager* game) {
 	//Prepare display of menu
 	textFont.loadFromFile("data/arial.ttf");
 	menuText.setFont(textFont);
+	tutoText.setFont(textFont);
 	menuText.setFillColor(sf::Color::Green);
+	tutoText.setFillColor(sf::Color::Green);
 	menuText.setCharacterSize(24);
+	tutoText.setCharacterSize(20);
 	menuText.setPosition(20, 20);
 
 	std::stringstream tempMenuText;
@@ -137,4 +140,6 @@ Menu::Menu(gameManager* game) {
 	}
 
 	menuText.setString(tempMenuText.str());
+	tutoText.setString("- Press R to rotate -\n- Drills can be placed on Ores to make Metal\n- Metal can be processes in a smelter");
+	tutoText.setPosition((Menu::game->gameWindow.getSize().x / 2) - (tutoText.getGlobalBounds().width / 2), 30);
 }

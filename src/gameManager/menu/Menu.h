@@ -35,6 +35,7 @@ public:
 
 	void display(sf::RenderWindow& display) {
 		display.draw(menuText);
+		display.draw(tutoText);
 	}
 
 	//Pops the Submenu if input = 0, passing any other number to the active menu.
@@ -76,7 +77,7 @@ private:
 
 	sf::Font textFont;
 	sf::Text menuText;
-	
+	sf::Text tutoText;
 
 private: // Submenu Function Declarations
 	friend void openBuildMenu(), runDemo(), openConveyorsMenu(), openMachinesMenu(), openOresMenu(), spawnConveyor(int), spawnMachine(int), spawnOre(int);

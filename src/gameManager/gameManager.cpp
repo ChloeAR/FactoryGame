@@ -22,21 +22,28 @@ void gameManager::inputHandler(sf::Event event) {
 
 void gameManager::demo() {
 	for (int i = 0; i < 5; i++) {
-		//Spawn Drills and Voids
-		Drill& dril = EntityHandler_.newTile<Drill>(&ResourceHandler_, sf::Vector2f(64, 128 * i + (64 * 4)), (Metal::Type)(i) );
-		EntityHandler_.newTile<Trash>(ResourceHandler_, sf::Vector2f(64 * 9 + 128, 128 * i + (64 * 4)));
-		dril.sprite.rotate(90);
+		int ypos = (256) + (64 * i);
+		if(i==0){ EntityHandler_.newTile<Conveyor>(ResourceHandler_, sf::Vector2f(128, ypos - 64), 2); }
+		if (i == 2) { EntityHandler_.newTile<Conveyor>(ResourceHandler_, sf::Vector2f(128, ypos), 2); Conveyor& conv2 = EntityHandler_.newTile<Conveyor>(ResourceHandler_, sf::Vector2f(256 + 128, ypos), 1); conv2.sprite.rotate(180); continue; }
+		EntityHandler_.newTile<Conveyor>(ResourceHandler_, sf::Vector2f(128, ypos), 3);
 
-		//Conveyors and Furnaces
-		for (int j = 0; j < 9; j++) {
-			if (j == 4) {
-				EntityHandler_.newTile<Furnace>(ResourceHandler_, sf::Vector2f(64 * j + 128, 128 * i + (64 * 4)));
-			}
-			else {
-				Conveyor& conv = EntityHandler_.newTile<Conveyor>(ResourceHandler_, sf::Vector2f(64 * j + 128, 128 * i + (64 * 4)), 3);
-				conv.sprite.rotate(90);
-			}
-		}
+		Grabber& grabby = EntityHandler_.newTile<Grabber>(ResourceHandler_, sf::Vector2f(128 + 64, ypos), EntityHandler_);
+		grabby.sprite.rotate(90);
+		Furnace& furny = EntityHandler_.newTile<Furnace>(ResourceHandler_, sf::Vector2f(256, ypos));
+		Conveyor& conv = EntityHandler_.newTile<Conveyor>(ResourceHandler_, sf::Vector2f(256 + 64, ypos), 2);
+		conv.sprite.rotate(90);
+		furny.sprite.rotate(90);
+
+		Conveyor& conv2 = EntityHandler_.newTile<Conveyor>(ResourceHandler_, sf::Vector2f(256 + 128, ypos), 1);
+		conv2.sprite.rotate(180);
+	}
+
+	EntityHandler_.newTile<Trash>(ResourceHandler_, sf::Vector2f(128+256, 576));
+	for (int i = 0; i < 3; i++) {
+		Conveyor& conv = EntityHandler_.newTile<Conveyor>(ResourceHandler_, sf::Vector2f(128 - 64 + (64 * i), 576), 2);
+		conv.sprite.setRotation(-90 * (i - 1));
+		EntityHandler_.newTile<Ore>(ResourceHandler_, sf::Vector2f(128 - 64 + (64 * i), 576 + 64), (Metal::Type)(i + 1));
+		EntityHandler_.newTile<Drill>(&ResourceHandler_, sf::Vector2f(128 - 64 + (64 * i), 576 + 64), (Metal::Type)(i + 1));
 	}
 }
 
